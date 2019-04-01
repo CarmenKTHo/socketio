@@ -17,12 +17,12 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/client2', function(req, res,next) {
-    res.sendFile(__dirname + '/index2.html');
-});
-
 io.on('connection', function(client) {
     console.log('Client connected...');
+
+    //var date = new Date();
+    var date = new Date("April 1, 2019 16:23:00");
+    io.emit('startOfQuiz', date.getTime());
 
     client.on('disconnect', function(){
         console.log('Client disconnected...');
