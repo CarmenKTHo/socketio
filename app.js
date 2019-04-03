@@ -20,9 +20,9 @@ app.get('/', function(req, res,next) {
 io.on('connection', function(client) {
     console.log('Client connected...');
 
-    var date = new Date();
-    var time = date.getTime() + 30000;
-    io.emit('startOfQuiz', time);
+    //var date = new Date();
+    //var time = date.getTime() + 15000;
+    io.emit('startOfQuiz', 15000);
 
     client.on('disconnect', function(){
         console.log('Client disconnected...');

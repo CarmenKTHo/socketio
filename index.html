@@ -14,6 +14,9 @@
         </style>
     </head>
     <body>
+        <h3 id="currentTime"></h3>
+        <p id="displayCur"></p>
+        <br />
         <h3 id="startOfQuiz"></h3>
         <p id="display"></p>
         <br />
@@ -31,11 +34,16 @@
         <script>
             var socket = io();
 
-            socket.on('startOfQuiz', function(date) {
+            socket.on('startOfQuiz', function(interval) {
+                $('#currentTime').html('Current time: ');
+                var curTime = new Date();
+                document.getElementById("displayCur").innerHTML = curTime;
+
                 $('#startOfQuiz').html('Start time of quiz: ');
 
-                var time = new Date(date);
-                document.getElementById("display").innerHTML = time;
+                var time = new Date().getTime() + interval;
+                var date = new Date(time);
+                document.getElementById("display").innerHTML = date;
 
                 // Update the count down every 1 second
                 var x = setInterval(function() {
@@ -44,7 +52,7 @@
                     var now = new Date().getTime();
 
                     // Find the distance between now and the count down date
-                    var distance = date - now;
+                    var distance = time - now;
 
                     // Time calculations for days, hours, minutes and seconds
                     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -61,6 +69,7 @@
                     // If the count down is over, write some text 
                     if (distance <= 0) {
                         clearInterval(x);
+                        document.getElementById("demo").innerHTML = "";
                         questionCountdown();
                     }
                 }, 1000);
